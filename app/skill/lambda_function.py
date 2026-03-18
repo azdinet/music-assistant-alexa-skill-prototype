@@ -86,6 +86,13 @@ def _get_stream_url(request):
 
     if url == '':
         url = None
+
+    # --- LE FIX DE LA DERNIÈRE CHANCE ---
+    # On force le HTTPS
+    url = url.replace("http://", "https://")
+    # On vire le port 8097 pour laisser Nginx (443) gérer
+    url = url.replace(":8097", "")
+    # ------------------------------------
     return url, audio
 
 # ######################### INTENT HANDLERS #########################
