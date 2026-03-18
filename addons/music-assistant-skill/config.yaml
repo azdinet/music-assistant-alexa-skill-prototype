@@ -34,7 +34,7 @@ schema:
   AWS_DEFAULT_REGION: "str"
   SKILL_HOSTNAME: "str"
   LOCALE: "str"
-webui: "http://[HOST]:[PORT]"
+webui: "http://[HOST]:[PORT:5000]"
 map: []
 ingress: false
 host_network: false
