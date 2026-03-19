@@ -113,6 +113,11 @@ def get_latest(api_hostname: Optional[str] = None,
             elif album:
                 secondary = album
 
+            if stream_url and isinstance(stream_url, str):
+                # On force le HTTPS et on retire le port 8097 
+                stream_url = stream_url.replace("http://", "https://")
+                stream_url = stream_url.replace(":8097", "")
+
             # If the stream URL points to a FLAC file, rewrite to MP3 for compatibility
             if stream_url and isinstance(stream_url, str):
                 try:

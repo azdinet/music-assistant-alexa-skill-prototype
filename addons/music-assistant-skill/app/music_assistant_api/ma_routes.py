@@ -24,6 +24,11 @@ def register_routes(bp):
         if not stream_url:
             return jsonify({'error': 'Missing required fields'}), 400
 
+        # On force le HTTPS et on retire le port 8097 
+        # pour que ça passe par le port 443 de Nginx
+        stream_url = stream_url.replace("http://", "https://")
+        stream_url = stream_url.replace(":8097", "")
+
         _store = {
             'streamUrl': stream_url,
             'title': data.get('title'),
