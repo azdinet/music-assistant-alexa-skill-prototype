@@ -5,6 +5,8 @@ This module registers the HTTP endpoints on a provided Flask
 module-level `_store` variable.
 """
 
+import re
+import os
 from flask import jsonify, request
 
 
@@ -28,6 +30,17 @@ def register_routes(bp):
         # pour que ça passe par le port 443 de Nginx
         stream_url = stream_url.replace("http://", "https://")
         stream_url = stream_url.replace(":8097", "")
+
+        # On remplace l'IP brute par le hostname public (STREAM_HOSTNAME) s'il est défini
+        stream_hostname = os.environ.get('STREAM_HOSTNAME', '').strip().strip('"\' ')
+        if stream_hostname:
+            if not stream_hostname.startswith('http'):
+                stream_hostname = f'https://{stream_hostname}'
+            try:
+                stream_url = re.sub(r'^https?://\d+\.\d+\.\d+\.\d+(?::\d+)?', stream_hostname, stream_url)
+            except re.error:
+                pass
+
 
         _store = {
             'streamUrl': stream_url,

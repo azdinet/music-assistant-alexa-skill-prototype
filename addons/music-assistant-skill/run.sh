@@ -12,6 +12,7 @@ import shlex
 
 allowed = {
     "MA_HOSTNAME",
+    "STREAM_HOSTNAME",
     "APP_USERNAME",
     "APP_PASSWORD",
     "PORT",
